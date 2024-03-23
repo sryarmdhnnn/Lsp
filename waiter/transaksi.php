@@ -13,11 +13,12 @@ $data = ambildata($conn, $query);
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>id transaksi</th>
-                        <th>id pesanan</th>
-                        <th>total</th>
-                        <th>bayar</th>
-                        <th>aksi</th>
+                        <th>Id</th>
+                        <th>Id Pesanan</th>
+                        <th>Nomer Meja</th>
+                        <th>Total</th>
+                        <th>Bayar</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,6 +26,7 @@ $data = ambildata($conn, $query);
                         <tr>
                             <td><?= $menu['idtransaksi'] ?></td>
                             <td><?= $menu['idpesanan'] ?></td>
+                            <td><?= $menu['nomermeja'] ?></td>
                             <td><?= $menu['total'] ?></td>
                             <td><?= $menu['bayar'] ?></td>
                             <td align="center">

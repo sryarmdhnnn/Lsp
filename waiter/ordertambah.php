@@ -1,27 +1,38 @@
 <?php
 require 'functions.php';
-$query = 'SELECT * FROM menu ';
-$queryy = 'SELECT * FROM pelanggan ';
-$queryyy = 'SELECT * FROM user ';
-$data = ambildata($conn, $query);
-$dataa = ambildata($conn, $queryy);
-$dataaa = ambildata($conn, $queryyy);
+$tgl_sekarang = Date('Y-m-d h:i:s');
+$invoice   = 'SRDRST' . Date('Ymdsi');
+$idmeja = $_GET['idmeja'];
+$idmenu = $_GET['idmenu'];
+$idpelanggan   = $_GET['idpelanggan'];
+$iduser = $_GET['iduser'];
+
+$meja = ambilsatubaris($conn, 'SELECT nomermeja from meja WHERE idmeja = ' . $idmeja);
+$menu = ambilsatubaris($conn, 'SELECT namamenu from menu WHERE idmenu = ' . $idmenu);
+$pelanggan = ambilsatubaris($conn, 'SELECT namapelanggan from pelanggan WHERE idpelanggan = ' . $idpelanggan);
+$user = ambildata($conn, 'SELECT * FROM user WHERE iduser = ' . $iduser);
 if (isset($_POST['btn-simpan'])) {
-    $nama     = $_POST['namamenu'];
-    $namapelanggan = $_POST['namapelanggan'];
-    $jumlah = $_POST['jumlah'];
-    $namauser = $_POST['namauser'];
-    $query = "INSERT INTO pesanan (namamenu,namapelanggan,jumlah,namauser) values ('$nama','$namapelanggan','$jumlah','$namauser)";
+    $kode_invoice = $_POST['kode_invoice'];
+
+    $query = "INSERT INTO pesanan (idpesanan,kode_invoice,idmeja,idpelanggan,jumlah,iduser) VALUES ('$idpesanan','$kode_invoice','$idpelanggan','$jumlah','$iduser')";
 
     $execute = bisa($conn, $query);
     if ($execute == 1) {
-        $success = 'true';
-        $title = 'Berhasil';
-        $message = 'Berhasil menambahkan menu baru';
-        $type = 'success';
-        header('location: barang.php?crud=' . $success . '&msg=' . $message . '&type=' . $type . '&title=' . $title);
-    } else {
-        echo "Gagal Tambah Data";
+        $idpesanan = $_POST['idpesanan'];
+        $jumlah = $_POST['jumlah'];
+        $hargapesanan = ambilsatubaris($conn, 'SELECT harga from pesanan WHERE idpesanan = ' . $idpesanan);
+        $harga = $hargapesanan['harga'] * $jumlah;
+        $transaksi = ambilsatubaris($conn, "SELECT * FROM transaksi WHERE kode_invoice = '" . $kode_invoice . "'");
+        $idtransaksi = $transaksi['idtransaksi'];
+
+        $sqlDetail = "INSERT INTO transaksi (idtransaksi,idpesanan,total,bayar) VALUES ('$idtransaksi','$idpesanan','$total','$bayar')";
+
+        $executeDetail = bisa($conn, $sqlDetail);
+        if ($executeDetail == 1) {
+            header('location: order.php?id=' . $idtransaksi);
+        } else {
+            echo "Gagal Tambah Data";
+        }
     }
 }
 require 'header.php';
@@ -38,6 +49,14 @@ require 'header.php';
                         </div>
                         <form class="user" method="post" action="">
                             <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <label>Nomer Meja</label>
+                                    <select name="nomermeja" class="form-control">
+                                        <?php foreach ($data as $menu) : ?>
+                                            <option value="<?= $menu['nomermeja'] ?>"><?= htmlspecialchars($menu['nomermeja']); ?></option>
+                                        <?php endforeach ?>
+                                    </select>
+                                </div>
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label>Nama Barang</label>
                                     <select name="namamenu" class="form-control">

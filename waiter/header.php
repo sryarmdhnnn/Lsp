@@ -62,6 +62,11 @@
                     <i class="fas fa-fw fa-shopping-cart"></i>
                     <span>Barang</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="transaksi.php">
+                    <i class="fas fa-fw fa-money"></i>
+                    <span>Transaksi</span></a>
+            </li>
 
         </ul>
         <!-- End of Sidebar -->
