@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 23 Mar 2024 pada 02.21
+-- Waktu pembuatan: 25 Mar 2024 pada 15.48
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -29,15 +29,15 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `meja` (
   `idmeja` int(11) NOT NULL,
-  `kodemeja` varchar(50) NOT NULL
+  `nomermeja` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `meja`
 --
 
-INSERT INTO `meja` (`idmeja`, `kodemeja`) VALUES
-(1, '1');
+INSERT INTO `meja` (`idmeja`, `nomermeja`) VALUES
+(1, 1);
 
 -- --------------------------------------------------------
 
@@ -56,9 +56,7 @@ CREATE TABLE `menu` (
 --
 
 INSERT INTO `menu` (`idmenu`, `namamenu`, `harga`) VALUES
-(22, 'serty', 120),
-(26, 'sayur', 10000),
-(27, 'baju', 1000);
+(1, 'Nasi Goreng Spesial', 25000);
 
 -- --------------------------------------------------------
 
@@ -68,9 +66,9 @@ INSERT INTO `menu` (`idmenu`, `namamenu`, `harga`) VALUES
 
 CREATE TABLE `pelanggan` (
   `idpelanggan` int(11) NOT NULL,
-  `namapelanggan` char(255) NOT NULL,
+  `namapelanggan` varchar(150) NOT NULL,
   `jeniskelamin` enum('Laki-Laki','Perempuan') NOT NULL,
-  `nohp` char(13) NOT NULL,
+  `nohp` char(15) NOT NULL,
   `alamat` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -79,7 +77,7 @@ CREATE TABLE `pelanggan` (
 --
 
 INSERT INTO `pelanggan` (`idpelanggan`, `namapelanggan`, `jeniskelamin`, `nohp`, `alamat`) VALUES
-(1, 'surya', 'Laki-Laki', '085777850582', 'Depok');
+(1, 'Surya', 'Laki-Laki', '085777850582', 'Depok');
 
 -- --------------------------------------------------------
 
@@ -89,20 +87,12 @@ INSERT INTO `pelanggan` (`idpelanggan`, `namapelanggan`, `jeniskelamin`, `nohp`,
 
 CREATE TABLE `pesanan` (
   `idpesanan` int(11) NOT NULL,
-  `kode_invoice` varchar(255) NOT NULL,
-  `idmenu` int(11) NOT NULL,
-  `idpelanggan` int(11) NOT NULL,
+  `transaksiid` int(11) NOT NULL,
+  `menuid` int(11) NOT NULL,
   `jumlah` int(11) NOT NULL,
-  `iduser` int(11) NOT NULL,
-  `idmeja` int(11) NOT NULL
+  `totalharga` int(11) NOT NULL,
+  `totalbayar` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data untuk tabel `pesanan`
---
-
-INSERT INTO `pesanan` (`idpesanan`, `kode_invoice`, `idmenu`, `idpelanggan`, `jumlah`, `iduser`, `idmeja`) VALUES
-(5, '', 22, 1, 2, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -112,18 +102,17 @@ INSERT INTO `pesanan` (`idpesanan`, `kode_invoice`, `idmenu`, `idpelanggan`, `ju
 
 CREATE TABLE `transaksi` (
   `idtransaksi` int(11) NOT NULL,
-  `idpesanan` int(11) NOT NULL,
-  `idmeja` int(11) NOT NULL,
-  `total` int(11) NOT NULL,
-  `bayar` int(11) NOT NULL
+  `mejaid` int(11) NOT NULL,
+  `kodeinvoice` varchar(255) NOT NULL,
+  `menuid` int(11) NOT NULL,
+  `pelangganid` int(11) NOT NULL,
+  `tgl` datetime NOT NULL,
+  `bataswaktu` datetime NOT NULL,
+  `tglpembayaran` datetime NOT NULL,
+  `status` enum('Baru','Proses','Selesai') NOT NULL,
+  `statusbayar` enum('Terbayar','Belum') NOT NULL,
+  `userid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data untuk tabel `transaksi`
---
-
-INSERT INTO `transaksi` (`idtransaksi`, `idpesanan`, `idmeja`, `total`, `bayar`) VALUES
-(3, 5, 0, 5000, 5000);
 
 -- --------------------------------------------------------
 
@@ -133,10 +122,10 @@ INSERT INTO `transaksi` (`idtransaksi`, `idpesanan`, `idmeja`, `total`, `bayar`)
 
 CREATE TABLE `user` (
   `iduser` int(11) NOT NULL,
-  `namauser` char(255) NOT NULL,
-  `username` char(100) NOT NULL,
+  `namauser` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` enum('admin','kasir','waiter','owner') NOT NULL
+  `role` enum('admin','waiter','kasir','owner') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -145,9 +134,9 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`iduser`, `namauser`, `username`, `password`, `role`) VALUES
 (1, 'admin', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin'),
-(2, 'kasir', 'kasir', 'c7911af3adbd12a035b289556d96470a', 'kasir'),
-(3, 'owner', 'owner', '72122ce96bfec66e2396d2e25225d70a', 'owner'),
-(4, 'waiter', 'waiter', 'f64cff138020a2060a9817272f563b3c', 'waiter');
+(2, 'waiter', 'waiter', 'f64cff138020a2060a9817272f563b3c', 'waiter'),
+(3, 'kasir', 'kasir', 'c7911af3adbd12a035b289556d96470a', 'kasir'),
+(4, 'owner', 'owner', '72122ce96bfec66e2396d2e25225d70a', 'owner');
 
 --
 -- Indexes for dumped tables
@@ -176,18 +165,19 @@ ALTER TABLE `pelanggan`
 --
 ALTER TABLE `pesanan`
   ADD PRIMARY KEY (`idpesanan`),
-  ADD KEY `idmenu` (`idmenu`),
-  ADD KEY `idpelanggan` (`idpelanggan`),
-  ADD KEY `iduser` (`iduser`),
-  ADD KEY `idmeja` (`idmeja`);
+  ADD KEY `idtransaksi` (`transaksiid`),
+  ADD KEY `idmenu` (`menuid`);
 
 --
 -- Indeks untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
   ADD PRIMARY KEY (`idtransaksi`),
-  ADD KEY `idpesanan` (`idpesanan`),
-  ADD KEY `idmeja` (`idmeja`);
+  ADD KEY `idmeja` (`mejaid`),
+  ADD KEY `iduser` (`userid`),
+  ADD KEY `idpelanggan` (`pelangganid`),
+  ADD KEY `idmenu` (`menuid`),
+  ADD KEY `mejaid` (`mejaid`,`menuid`,`pelangganid`,`userid`);
 
 --
 -- Indeks untuk tabel `user`
@@ -203,25 +193,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `meja`
 --
 ALTER TABLE `meja`
-  MODIFY `idmeja` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idmeja` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `idmenu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `idmenu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  MODIFY `idpelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idpelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `pesanan`
 --
 ALTER TABLE `pesanan`
-  MODIFY `idpesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idpesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `transaksi`
@@ -243,15 +233,17 @@ ALTER TABLE `user`
 -- Ketidakleluasaan untuk tabel `pesanan`
 --
 ALTER TABLE `pesanan`
-  ADD CONSTRAINT `pesanan_ibfk_1` FOREIGN KEY (`idmenu`) REFERENCES `menu` (`idmenu`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `pesanan_ibfk_2` FOREIGN KEY (`idpelanggan`) REFERENCES `pelanggan` (`idpelanggan`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `pesanan_ibfk_3` FOREIGN KEY (`iduser`) REFERENCES `user` (`iduser`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `pesanan_ibfk_1` FOREIGN KEY (`transaksiid`) REFERENCES `transaksi` (`idtransaksi`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `pesanan_ibfk_2` FOREIGN KEY (`menuid`) REFERENCES `menu` (`idmenu`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
-  ADD CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`idpesanan`) REFERENCES `pesanan` (`idpesanan`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`mejaid`) REFERENCES `meja` (`idmeja`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`pelangganid`) REFERENCES `pelanggan` (`idpelanggan`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `transaksi_ibfk_3` FOREIGN KEY (`menuid`) REFERENCES `menu` (`idmenu`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `transaksi_ibfk_4` FOREIGN KEY (`userid`) REFERENCES `user` (`iduser`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

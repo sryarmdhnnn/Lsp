@@ -50,9 +50,9 @@ require 'header.php';
                                     <input type="text" name="harga" class="form-control form-control-user" value="<?= $edit['harga'] ?>">
                                 </div>
                             </div>
-                            <div class="text-right">
-                                <button type="reset" class="btn btn-danger"><i class="fa fa-refresh"></i> Reset</button>
-                                <button type="submit" name="btn-simpan" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
+                            <div class="text-center">
+                                <button type="reset" class="btn btn-dark"><i class="fas fa-fw fa-retweet"></i> Reset</button>
+                                <button type="submit" name="btn-simpan" class="btn btn-success"><i class="fas fa-fw fa-save"></i> Simpan</button>
                             </div>
                         </form>
                     </div>

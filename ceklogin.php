@@ -1,5 +1,6 @@
 <?php
 session_start();
+$_SESSION['namauser'] = $namauser;
 $conn = mysqli_connect('localhost', 'root', '', 'lsp');
 
 $username = stripslashes($_POST['username']);
@@ -15,7 +16,7 @@ if ($cek > 0) {
         $_SESSION['role'] = 'admin';
         $_SESSION['username'] = $data['username'];
         $_SESSION['iduser'] = $data['iduser'];
-        header('location:admin/barang.php');
+        header('location:admin/index.php');
     } else if ($data['role'] == 'kasir') {
         $_SESSION['role'] = 'kasir';
         $_SESSION['username'] = $data['username'];
@@ -25,12 +26,12 @@ if ($cek > 0) {
         $_SESSION['role'] = 'owner';
         $_SESSION['username'] = $data['username'];
         $_SESSION['iduser'] = $data['iduser'];
-        header('location:owner/transaksi.php');
+        header('location:owner/laporan.php');
     } else if ($data['role'] == 'waiter') {
         $_SESSION['role'] = 'waiter';
         $_SESSION['username'] = $data['username'];
         $_SESSION['iduser'] = $data['iduser'];
-        header('location:waiter/barang.php');
+        header('location:waiter/order.php');
     }
 } else {
     $msg = 'Username Atau Password Salah';

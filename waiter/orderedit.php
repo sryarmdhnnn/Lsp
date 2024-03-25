@@ -29,7 +29,7 @@ require 'header.php';
 <div class="container">
 
     <div class="col-md-6 mt-2">
-        <a href="barang.php" class="btn btn-secondary box-title"><i class="fa fa-arrow-left fa-fw"></i> Kembali</a>
+        <a href="order.php" class="btn btn-secondary box-title"><i class="fa fa-arrow-left fa-fw"></i> Kembali</a>
     </div>
     <div class="card o-hidden border-0 shadow-lg my-5">
         <div class="card-body p-0">
@@ -58,9 +58,9 @@ require 'header.php';
                                     </select>
                                 </div>
                             </div>
-                            <div class="text-right">
-                                <button type="reset" class="btn btn-danger"><i class="fa fa-refresh"></i> Reset</button>
-                                <button type="submit" name="btn-simpan" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
+                            <div class="text-center">
+                                <button type="reset" class="btn btn-dark"><i class="fas fa-fw fa-retweet"></i> Reset</button>
+                                <button type="submit" name="btn-simpan" class="btn btn-warning"><i class="fas fa-fw fa-save"></i> Ubah</button>
                             </div>
                         </form>
                     </div>

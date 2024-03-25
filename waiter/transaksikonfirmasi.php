@@ -1,10 +1,11 @@
 <?php
-$title = 'order';
+$title = 'transaksi';
 require 'functions.php';
 require 'header.php';
-$query = "SELECT transaksi.*,meja.nomermeja, pelanggan.namapelanggan , pesanan.totalharga FROM transaksi INNER JOIN meja ON meja.idmeja = transaksi.mejaid INNER JOIN pelanggan ON pelanggan.idpelanggan = transaksi.pelangganid INNER JOIN pesanan ON pesanan.transaksiid = transaksi.idtransaksi ";
+$query = "SELECT transaksi.*,meja.nomermeja, pelanggan.namapelanggan , pesanan.totalharga FROM transaksi INNER JOIN meja ON meja.idmeja = transaksi.mejaid INNER JOIN pelanggan ON pelanggan.idpelanggan = transaksi.pelangganid INNER JOIN pesanan ON pesanan.transaksiid = transaksi.idtransaksi WHERE transaksi.statusbayar='Belum'";
 $data = ambildata($conn, $query);
 ?>
+
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-dark">Data Transaksi</h6>
@@ -12,7 +13,7 @@ $data = ambildata($conn, $query);
     <div class="card-body">
         <div class="table-responsive">
             <div class="col-md-6">
-                <a href="transaksicarimeja.php" class="btn btn-primary box-title"><i class="fa fa-plus fa-fw"></i> Tambah</a>
+                <a href="transaksi.php" class="btn btn-secondary box-title"><i class="fa fa-arrow-left fa-fw"></i> Kembali</a>
             </div>
             <br>
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -39,9 +40,8 @@ $data = ambildata($conn, $query);
                             <td><?= $menu['status'] ?></td>
                             <td><?= $menu['statusbayar'] ?></td>
                             <td><?= $menu['totalharga'] ?></td>
-                            <td align="center">
-                                <a href="transaksiedit.php?id=<?= $menu['idtransaksi']; ?>" data-toggle="tooltip" data-placement="bottom" title="Edit" class="btn btn-warning"><i class="fa fa-edit"></i></a>
-                                <a href="transaksihapus.php?id=<?= $menu['idtransaksi']; ?>" onclick="return confirm('Yakin hapus data ? ');" data-toggle="tooltip" data-placement="bottom" title="Hapus" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                            <td>
+                                <a href="transaksibayar.php?id=<?= $menu['idtransaksi']; ?>" data-toggle="tooltip" data-placement="bottom" title="Pilih" class="btn btn-primary btn-block"> PILIH</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -50,7 +50,3 @@ $data = ambildata($conn, $query);
         </div>
     </div>
 </div>
-
-<?php
-require 'footer.php';
-?>

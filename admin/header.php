@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Kasir</title>
+    <title>KASIR</title>
 
     <!-- Custom fonts for this template-->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -34,32 +34,44 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-home"></i>
+                    <i class="fas fa-snowflake"></i>
                 </div>
                 <div class="sidebar-brand-text mx-3">KASIR <sup>SR</sup></div>
             </a>
 
             <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" href="index.php">
-                    <i class="fas fa-fw fa-home"></i>
-                    <span>Beranda</span></a>
-            </li>
-
-            <!-- Divider -->
             <hr class="sidebar-divider">
-            <li class="nav-item">
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Entri
+            </div>
+            <li class="nav-item <?php if ($title == 'meja') {
+                                    echo 'active';
+                                } ?>">
                 <a class="nav-link" href="meja.php">
-                    <i class="fas fa-fw fa-shopping-cart"></i>
+                    <i class="fas fa-fw fa-table"></i>
                     <span>Meja</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item <?php if ($title == 'barang') {
+                                    echo 'active';
+                                } ?>">
                 <a class="nav-link" href="barang.php">
-                    <i class="fas fa-fw fa-shopping-cart"></i>
-                    <span>Barang</span></a>
+                    <i class="fas fa-fw fa-bars"></i>
+                    <span>Menu</span></a>
+            </li>
+
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                User
+            </div>
+            <li class="nav-item <?php if ($title == 'pengguna') {
+                                    echo 'active';
+                                } ?>">
+                <a class="nav-link" href="barang.php">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Pengguna</span></a>
             </li>
 
         </ul>
@@ -79,15 +91,9 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
-                            <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Profile
-                            </a>
-                            <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Logout

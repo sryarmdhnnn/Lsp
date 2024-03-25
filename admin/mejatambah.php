@@ -31,15 +31,15 @@ require 'header.php';
                             <h1 class="h4 text-gray-900 mb-4">Tambah Barang</h1>
                         </div>
                         <form class="user" method="post" action="">
-                            <div class="form-group row">
+                            <div class="form-group row justify-content-center">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label>Nomer Meja</label>
                                     <input type="text" name="nomermeja" class="form-control form-control-user" placeholder="Nomer Meja">
                                 </div>
                             </div>
-                            <div class="text-right">
-                                <button type="reset" class="btn btn-danger"><i class="fa fa-refresh"></i> Reset</button>
-                                <button type="submit" name="btn-simpan" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
+                            <div class="text-center">
+                                <button type="reset" class="btn btn-dark"><i class="fas fa-fw fa-retweet"></i> Reset</button>
+                                <button type="submit" name="btn-simpan" class="btn btn-success"><i class="fas fa-fw fa-save"></i> Simpan</button>
                             </div>
                         </form>
                     </div>
